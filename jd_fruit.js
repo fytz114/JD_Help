@@ -26,13 +26,13 @@ jd免费水果 搬的https://github.com/liuxiaoyucc/jd-helper/blob/a6f275d978574
 
 export DO_TEN_WATER_AGAIN = "" 默认再次浇水
 */
-const $ = new Env('东东农场互助版');
+const $ = new Env('东东农场助力池版本');
 let cookiesArr = [], cookie = '', isBox = false, notify, allMessage = '';
 //助力好友分享码(最多3个,否则后面的助力失败),原因:京东农场每人每天只有3次助力机会
 //此此内容是IOS用户下载脚本到本地使用，填写互助码的地方，同一京东账号的好友互助码请使用@符号隔开。
 //下面给出两个账号的填写示例（iOS只支持2个京东账号）
 
-const JD_ZLC_URL = process.env.JD_ZLC_URL ? process.env.JD_ZLC_URL : "https://zlc1.chaoyi996.com";
+const JD_ZLC_URL = process.env.JD_ZLC_URL ? process.env.JD_ZLC_URL : "http://67.230.163.173";
 
 let newShareCodes = [];
 let codeType = 0;
@@ -158,6 +158,7 @@ async function jdFruit() {
         await initForFarm();
         if ($.farmInfo.farmUserPro) {
             jdFruitShareArr.push($.farmInfo.farmUserPro.shareCode)
+
             await GetCollect();
             message = `【水果名称】${$.farmInfo.farmUserPro.name}\n`;
             console.log(`\n【已成功兑换水果】${$.farmInfo.farmUserPro.winTimes}次\n`);
@@ -848,22 +849,23 @@ async function masterHelpShare() {
     helpStatisticArr['Remark'] = helpStatisticRemark;
 
     console.log(`当前使用助力池${JD_ZLC_URL}`)
-    r = { url: `https://zlc1.chaoyi996.com/api/app/booster-code/submit-real-contribution`, body: JSON.stringify(helpStatisticArr), headers: { "Content-Type": "application/json" } };
-    $.post(r, (err, resp, data) => {
-        try {
-            if (err) {
-                console.log(`${JSON.stringify(err)}`)
-                console.log(`${$.name} 提交助力结果API请求失败`)
-            } else {
-                if (data) {
-                    console.log(`提交成功`)
-                    data = JSON.parse(data);
-                }
-            }
-        } catch (e) {
-            $.logErr(e, resp)
-        }
-    })
+
+    // r = { url: `https://zlc1.chaoyi996.com/api/app/booster-code/submit-real-contribution`, body: JSON.stringify(helpStatisticArr), headers: { "Content-Type": "application/json" } };
+    // $.post(r, (err, resp, data) => {
+    //     try {
+    //         if (err) {
+    //             console.log(`${JSON.stringify(err)}`)
+    //             console.log(`${$.name} 提交助力结果API请求失败`)
+    //         } else {
+    //             if (data) {
+    //                 console.log(`提交成功`)
+    //                 data = JSON.parse(data);
+    //             }
+    //         }
+    //     } catch (e) {
+    //         $.logErr(e, resp)
+    //     }
+    // })
     // }
     if ($.isLoon() || $.isQuanX() || $.isSurge()) {
         let helpSuccessPeoplesKey = timeFormat() + $.farmInfo.farmUserPro.shareCode;
@@ -1170,10 +1172,11 @@ async function GetCollect() {
             }
         }
         if ($.isNode() && !process.env.FRUITSHARECODES) {
-            console.log(`您未填写助力码变量，优先进行账号内互助，再帮【zero205】助力`);
+            console.log(`您未填写助力码变量，优先进行账号内互助`);
             newShareCodes = [...(jdFruitShareArr || []), ...(newShareCodes || [])]
         }
         const readShareCodeRes = await readShareCode(jdFruitShareArr[$.index - 1]);
+        console.log(readShareCodeRes,99999)
         if (readShareCodeRes && readShareCodeRes.code === 200) {
             newShareCodes = [...new Set([...newShareCodes, ...(readShareCodeRes.data || [])])];
         }
@@ -1186,7 +1189,7 @@ async function GetCollect() {
 function readShareCode(code) {
     return new Promise(async resolve => {
         console.log(`当前使用助力池${JD_ZLC_URL}`)
-        $.get({ url: JD_ZLC_URL + `/farm?code=` + code, timeout: 10000, }, (err, resp, data) => {
+        $.get({ url: JD_ZLC_URL + `/farm` , timeout: 10000, }, (err, resp, data) => {
             try {
                 if (err) {
                     console.log(`${JSON.stringify(err)}`)

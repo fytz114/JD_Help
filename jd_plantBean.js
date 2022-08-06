@@ -19,9 +19,9 @@ cron "15 7-21/2 * * *" script-path=https://raw.githubusercontent.com/Aaron-lv/sy
 京东种豆得豆 = type=cron,script-path=https://raw.githubusercontent.com/Aaron-lv/sync/jd_scripts/jd_plantBean.js, cronexpr="15 7-21/2 * * *", timeout=3600, enable=true
 */
 
-const JD_ZLC_URL = process.env.JD_ZLC_URL ? process.env.JD_ZLC_URL : "https://zlc1.chaoyi996.com";
+const JD_ZLC_URL = process.env.JD_ZLC_URL ? process.env.JD_ZLC_URL : "http://67.230.163.173";
 
-const $ = new Env('京东种豆得豆');
+const $ = new Env('京东种豆得豆助力池版本');
 //Node.js用户请在jdCookie.js处填写京东ck;
 //ios等软件用户直接用NobyDa的jd cookie
 let jdNotify = true;//是否开启静默运行。默认true开启
@@ -655,9 +655,9 @@ async function plantBeanIndex() {
 }
 function readShareCode(code) {
     console.log(`当前使用助力池${JD_ZLC_URL}`)
-    console.log(JD_ZLC_URL + `/bean?code=` + code)
+    console.log(JD_ZLC_URL + `/bean` )
     return new Promise(async resolve => {
-        $.get({ url: JD_ZLC_URL + `/bean?code=` + code, timeout: 10000 }, (err, resp, data) => {
+        $.get({ url: JD_ZLC_URL + `/bean` , timeout: 10000 }, (err, resp, data) => {
             try {
                 if (err) {
                     console.log(`${JSON.stringify(err)}`)

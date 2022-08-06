@@ -47,7 +47,7 @@ class MoveMentFaker {
 
   async init() {
     try {
-      // console.time('MoveMentFaker');
+
       process.chdir(__dirname);
       const html = await MoveMentFaker.httpGet(URL);
       const script = REG_SCRIPT.exec(html);
@@ -76,7 +76,7 @@ class MoveMentFaker {
 
       // console.log(html);
       // console.log(script[1],script[2]);
-      // console.timeEnd('MoveMentFaker');
+
     } catch (e) {
       console.log(e)
     }
@@ -129,7 +129,7 @@ class MoveMentFaker {
 
 async function getBody($) {
   const zf = new MoveMentFaker($.cookie);
-  // const zf = new MoveMentFaker($.secretp, $.cookie);
+
   const ss = await zf.run();
 
   return ss;

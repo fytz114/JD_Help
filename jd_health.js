@@ -19,18 +19,16 @@ cron "13 0,6,22 * * *" script-path=jd_health.js, tag=东东健康社区
 ============小火箭=========
 东东健康社区 = type=cron,script-path=jd_health.js, cronexpr="13 0,6,22 * * *", timeout=3600, enable=true
  */
-const $ = new Env("东东健康社区");
+const $ = new Env("东东健康社区助力池版本");
 const jdCookieNode = $.isNode() ? require("./jdCookie.js") : "";
 const notify = $.isNode() ? require('./sendNotify') : "";
 let cookiesArr = [], cookie = "", allMessage = "", message;
 const inviteCodes = [
-  `T0225KkcRh9P9FbRKUygl_UJcgCjVfnoaW5kRrbA@T0159KUiH11Mq1bSKBoCjVfnoaW5kRrbA@T018v_hzQhwZ8FbUIRib1ACjVfnoaW5kRrbA`,
-  `T0225KkcRh9P9FbRKUygl_UJcgCjVfnoaW5kRrbA@T0159KUiH11Mq1bSKBoCjVfnoaW5kRrbA@T018v_hzQhwZ8FbUIRib1ACjVfnoaW5kRrbA`,
-  `T0225KkcRh9P9FbRKUygl_UJcgCjVfnoaW5kRrbA@T0159KUiH11Mq1bSKBoCjVfnoaW5kRrbA@T018v_hzQhwZ8FbUIRib1ACjVfnoaW5kRrbA`,
+
 ]
 const ZLC = !(process.env.JD_JOIN_ZLC && process.env.JD_JOIN_ZLC === 'false')
 let reward = process.env.JD_HEALTH_REWARD_NAME ? process.env.JD_HEALTH_REWARD_NAME : ''
-const JD_ZLC_URL=process.env.JD_ZLC_URL?process.env.JD_ZLC_URL:"http://zlc1.chaoyi996.com:8880";
+const JD_ZLC_URL=process.env.JD_ZLC_URL?process.env.JD_ZLC_URL:"http://67.230.163.173";
 const randomCount = $.isNode() ? 20 : 5;
 function oc(fn, defaultVal) {//optioanl chaining
   try {
@@ -57,7 +55,7 @@ const JD_API_HOST = "https://api.m.jd.com/";
     return;
   }
   if (!process.env.JD_JOIN_ZLC) {
-    console.log(`【注意】本脚本默认会给助力池进行助力！\n如需加入助力池请添加TG群：https://t.me/jd_zero_205\n如不加入助力池互助，可添加变量名称：JD_JOIN_ZLC，变量值：false\n`)
+    console.log(`【注意】本脚本默认会给助力池进行助力！\n如不加入助力池互助，可添加变量名称：JD_JOIN_ZLC，变量值：false\n`)
   }
   await requireConfig()
   for (let i = 0; i < cookiesArr.length; i++) {

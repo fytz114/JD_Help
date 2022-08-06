@@ -12,6 +12,7 @@
  */
 //此处填写京东账号cookie。
 let CookieJDs = [
+    "pt_key=AAJivA1JADDZ0jAlaV20ePw8d-q5IZsHQmQZ7aTASBP2QjV6LIrmc2ri3FTsPl07KBv7rKFMu7A;pt_pin=jd_pjfZDwZPSYbj;"
 ]
 // 判断环境变量里面是否有京东ck
 if (process.env.JD_COOKIE) {
@@ -97,5 +98,5 @@ let envName = process.env.ShareCodeEnvName
 if (nameConfig && envName) {
     SetShareCodesEnv(nameConfig, envName)
 } else {
-    console.debug(`faker 友情提示：您的脚本正常运行中`)
+    console.debug(`您的脚本正常运行中`)
 }
