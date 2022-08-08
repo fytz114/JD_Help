@@ -73,7 +73,6 @@ let NoNeedCodes = [];
         return;
     }
     // if (llhelp) {
-    console.log('开始收集您的互助码，用于账号内部互助，请稍等...');
     for (let i = 0; i < cookiesArr.length; i++) {
         if (cookiesArr[i]) {
             cookie = cookiesArr[i];
@@ -826,7 +825,12 @@ async function masterHelpShare() {
             remainTimes = $.helpResult.helpResult.remainTimes;
             if ($.helpResult.helpResult.remainTimes === 0) {
                 console.log(`您当前助力次数已耗尽，跳出助力`);
-                break
+                if (!(helpStatisticStatus in helpStatisticArr['results'])) {
+                    helpStatisticArr['results'][helpStatisticStatus] = [code]
+                } else {
+                    helpStatisticArr['results'][helpStatisticStatus].push(code)
+                }
+                break;
             }
         } else {
             helpStatisticStatus = 2;
@@ -1170,7 +1174,6 @@ async function GetCollect() {
             newShareCodes = [...(jdFruitShareArr || []), ...(newShareCodes || [])]
         }
         const readShareCodeRes = await readShareCode(jdFruitShareArr[$.index - 1]);
-        console.log(readShareCodeRes,99999)
         if (readShareCodeRes && readShareCodeRes.code === 200) {
             newShareCodes = [...new Set([...newShareCodes, ...(readShareCodeRes.data || [])])];
         }
